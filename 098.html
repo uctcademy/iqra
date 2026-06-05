@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>99 Names</title>
+
+  <link rel="icon" type="image/x-icon" href="assets/chosen.jpeg">
+  <title>iqra</title>
+
+
   <style>
     * {
       margin: 0;
@@ -114,6 +118,57 @@
       font-size: 32px;
       color: #555;
     }
+
+/* Navigation Arrows - Desktop friendly */
+.nav-arrows {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  pointer-events: none;
+  z-index: 100;
+}
+
+.nav-arrow {
+  position: absolute;
+  pointer-events: auto;
+  cursor: pointer;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(4px);
+  width: 50px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: #86efac;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+}
+
+.nav-arrow:hover {
+  background: rgba(255,255,255,0.3);
+  transform: scale(1.05);
+}
+
+.nav-arrow.prev {
+  left: 10px;
+}
+
+.nav-arrow.next {
+  right: 10px;
+}
+
+/* Hide arrows on touch devices (optional) */
+@media (hover: none) and (pointer: coarse) {
+  .nav-arrows {
+    display: none;
+  }
+}
+
+
   </style>
 </head>
 <body>
@@ -138,6 +193,39 @@
   <div class="footer">
     <div>🤲 May Allah Accept</div>
   </div>
+
+<div class="nav-arrows">
+  <a href="#" class="nav-arrow prev" id="prevArrow">←</a>
+  <a href="#" class="nav-arrow next" id="nextArrow">→</a>
+</div>
+
+<script>
+// Dynamic arrow navigation that works with your existing swipe.js
+document.getElementById('prevArrow').addEventListener('click', (e) => {
+  e.preventDefault();
+  const filename = window.location.pathname.split('/').pop();
+  let currentPage = parseInt(filename.replace('.html', ''));
+  let prevPage = currentPage - 1;
+  const MIN_PAGE = 96;
+  const MAX_PAGE = 101;
+  if (prevPage < MIN_PAGE) prevPage = MAX_PAGE;
+  window.location.href = String(prevPage).padStart(3, '0') + '.html';
+});
+
+document.getElementById('nextArrow').addEventListener('click', (e) => {
+  e.preventDefault();
+  const filename = window.location.pathname.split('/').pop();
+  let currentPage = parseInt(filename.replace('.html', ''));
+  let nextPage = currentPage + 1;
+  const MIN_PAGE = 96;
+  const MAX_PAGE = 101;
+  if (nextPage > MAX_PAGE) nextPage = MIN_PAGE;
+  window.location.href = String(nextPage).padStart(3, '0') + '.html';
+});
+</script>
+
+
+
 <script src="swipe.js"></script>
 </body>
 </html>
